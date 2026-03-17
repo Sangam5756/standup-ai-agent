@@ -2,6 +2,7 @@ package org.ailearn.services;
 
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.ailearn.dtos.AnswerResponse;
 import org.ailearn.dtos.QuestionRequest;
 import org.springframework.ai.openai.OpenAiChatModel;
@@ -13,6 +14,7 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class AiService {
@@ -32,6 +34,9 @@ public class AiService {
             """;
 
     public AnswerResponse generateAnswer(QuestionRequest questionRequest) {
+        if (questionRequest == null || questionRequest.getQuestion() == null || questionRequest.getQuestion().isBlank()) {
+            throw new IllegalArgumentException("Question cannot be null or empty");
+        }
 
         String userPrompt = "Question: " + questionRequest.getQuestion();
 
@@ -40,15 +45,16 @@ public class AiService {
                 new UserMessage(userPrompt)
         ));
 
-//        get the response
-        String response =chatModel.call(prompt)
+        String response = chatModel.call(prompt)
                 .getResult()
                 .getOutput()
                 .getText();
 
-        return objectMapper.readValue(response,AnswerResponse.class);
+        if (response == null || response.isBlank()) {
+            throw new RuntimeException("Empty response from AI model");
+        }
 
-
+        return objectMapper.readValue(response, AnswerResponse.class);
     }
 
 

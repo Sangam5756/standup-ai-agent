@@ -1,6 +1,8 @@
 package org.ailearn.controllers;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.ailearn.dtos.ApiResponse;
 import org.ailearn.dtos.StandupRequest;
 import org.ailearn.services.StandupAgentService;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +18,10 @@ public class StandupController {
     private final StandupAgentService agentService;
 
     @PostMapping
-    public ResponseEntity<String> submitStandup(@RequestBody StandupRequest request) {
+    public ResponseEntity<ApiResponse<String>> submitStandup( @Valid @RequestBody StandupRequest request) {
         String result = agentService.generateAndPost(request);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success("Standup processed", result));
+
     }
 
 }
