@@ -30,7 +30,6 @@ repositories {
 ext {
     set('springAiVersion', "2.0.0-M2")
 }
-
 dependencies {
 
     implementation 'io.github.cdimascio:dotenv-java:3.2.0'
@@ -42,14 +41,16 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    // swapped MySQL for PostgreSQL
+    runtimeOnly 'org.postgresql:postgresql'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     testImplementation 'org.assertj:assertj-core:3.25.1'
     testImplementation 'com.h2database:h2'
 
-    // Spring Security & JWT
+    // Spring Security + JWT
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
