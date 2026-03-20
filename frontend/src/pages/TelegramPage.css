@@ -1,0 +1,145 @@
+.telegram-page {
+  padding-top: 12px;
+  padding-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.telegram-header { }
+
+.telegram-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.telegram-title-row h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.4px;
+}
+
+.telegram-header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.title-icon { color: var(--accent); }
+
+.telegram-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Steps */
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.step-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--accent-glow);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  padding-top: 4px;
+}
+
+/* Code display */
+.code-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.code-value {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 8px;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 0 0 4px var(--accent-glow);
+  flex: 1;
+  text-align: center;
+}
+
+.copy-btn, .regen-btn { padding: 10px 16px; font-size: 13px; }
+
+/* Empty state */
+.code-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px;
+}
+
+.code-placeholder {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 8px;
+  color: var(--text-muted);
+  background: var(--bg-primary);
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 12px 24px;
+}
+
+.code-empty p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Generate button */
+.generate-btn { }
+
+/* Open telegram link */
+.open-telegram-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  transition: opacity 0.2s;
+}
+
+.open-telegram-btn:hover { opacity: 0.75; }
+
+@media (max-width: 768px) {
+  .telegram-grid { grid-template-columns: 1fr; }
+}
