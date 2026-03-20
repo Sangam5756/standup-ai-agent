@@ -14,6 +14,9 @@ java {
     }
 }
 
+bootJar {
+    archiveFileName = 'standup-agent.jar'
+}
 configurations {
     compileOnly {
         extendsFrom annotationProcessor

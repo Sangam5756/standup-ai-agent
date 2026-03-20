@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class JwtService {
 
     // Needs to be at least 256 bits (32 bytes). This is an example base64 key
-    @Value("${jwt.secret:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}")
+    @Value("${jwt.secret}")
     private String secretKey;
 
     @Value("${jwt.expiration:86400000}") // 1 day by default
