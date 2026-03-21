@@ -16,9 +16,6 @@ public class TelegramTool {
     @Value("${telegram.bot.token}")
     private String botToken;
 
-    @Value("${telegram.chat.id}")
-    private String chatId;
-
     @Tool(description = "Send the formatted standup message to a specific Telegram chat. Always call this after FormatTool.")
     public String sendToTelegram(String formattedMessage, String chatId) {
 
