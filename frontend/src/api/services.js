@@ -8,6 +8,7 @@ export const authApi = {
 export const standupApi = {
   submit: (data) => api.post('/api/standup', data),
   getHistory: () => api.get('/api/standup/history'),
+  getRecent: (limit = 5) => api.get(`/api/standup/history?limit=${limit}`),
   getById: (id) => api.get(`/api/standup/${id}`),
   update: (id, data) => api.put(`/api/standup/${id}`, data),
   delete: (id) => api.delete(`/api/standup/${id}`),

@@ -21,7 +21,13 @@ public class HistoryController {
     private final StandupHistoryService historyService;
 
     @GetMapping("/history")
-    public ResponseEntity<List<StandupEntry>> getHistory(@AuthenticationPrincipal User user) {
+    public ResponseEntity<List<StandupEntry>> getHistory(
+            @AuthenticationPrincipal User user,
+            @RequestParam(required = false) Integer limit
+    ) {
+        if (limit != null && limit > 0) {
+            return ResponseEntity.ok(historyService.getHistory(user, limit));
+        }
         return ResponseEntity.ok(historyService.getHistory(user));
     }
 

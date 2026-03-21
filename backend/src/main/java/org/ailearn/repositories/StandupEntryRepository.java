@@ -18,6 +18,8 @@ public interface StandupEntryRepository extends JpaRepository<StandupEntry, Long
 
     List<StandupEntry> findByUserOrderByCreatedAtDesc(org.ailearn.models.User user);
 
+    List<StandupEntry> findByUser(org.ailearn.models.User user, org.springframework.data.domain.Pageable pageable);
+
 // to get the entries for last 7 days for summary purpose
     @Query("Select s from StandupEntry s where s.user = :user and s.createdAt >= :since order by s.createdAt ASC")
     List<StandupEntry> findEntriesSince(org.ailearn.models.User user, LocalDateTime since);

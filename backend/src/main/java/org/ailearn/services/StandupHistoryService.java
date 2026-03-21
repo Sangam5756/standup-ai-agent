@@ -20,6 +20,10 @@ public class StandupHistoryService {
         return repository.findByUserOrderByCreatedAtDesc(user);
     }
 
+    public List<StandupEntry> getHistory(User user, int limit) {
+        return repository.findByUser(user, org.springframework.data.domain.PageRequest.of(0, limit, org.springframework.data.domain.Sort.by("createdAt").descending()));
+    }
+
     public Optional<StandupEntry> getEntryById(Long id, User user) {
         return repository.findById(id)
                 .filter(entry -> entry.getUser().getId().equals(user.getId()));

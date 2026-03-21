@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/store';
@@ -8,30 +8,39 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
-// Lazy-load future pages (placeholders for now)
-const DashboardPage  = React.lazy(() => import('./pages/DashboardPage'));
-const HistoryPage    = React.lazy(() => import('./pages/HistoryPage'));
-const WeeklyPage     = React.lazy(() => import('./pages/WeeklyPage'));
-const TelegramPage   = React.lazy(() => import('./pages/TelegramPage'));
+// Lazy-load future pages
+const DashboardPage  = lazy(() => import('./pages/DashboardPage'));
+const HistoryPage    = lazy(() => import('./pages/HistoryPage'));
+const WeeklyPage     = lazy(() => import('./pages/WeeklyPage'));
+const TelegramPage   = lazy(() => import('./pages/TelegramPage'));
+const LandingPage    = lazy(() => import('./pages/LandingPage'));
 
-function AppLayout({ children }) {
+function AppLayout({ children, isLanding = false }) {
   return (
-    <>
+    <div className={`min-h-screen flex flex-col ${!isLanding ? 'pt-16 md:pt-20' : ''}`}>
       <Navbar />
-      <main style={{ minHeight: 'calc(100vh - 64px)', padding: '32px 0' }}>
+      <main className={!isLanding ? 'flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10' : 'flex-1'}>
         {children}
       </main>
-    </>
+    </div>
   );
 }
+
+const LoadingScreen = () => (
+  <div className="flex flex-col items-center justify-center h-screen bg-[#0f172a] text-white">
+    <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+    <p className="text-white/60 font-medium animate-pulse">Initializing StandupAI...</p>
+  </div>
+);
 
 export default function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <React.Suspense fallback={<div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',color:'var(--text-secondary)'}}>Loading...</div>}>
+        <Suspense fallback={<LoadingScreen />}>
           <Routes>
             {/* Public routes */}
+            <Route path="/"         element={<AppLayout isLanding={true}><LandingPage /></AppLayout>} />
             <Route path="/login"    element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
 
@@ -57,11 +66,10 @@ export default function App() {
               </ProtectedRoute>
             } />
 
-            {/* Redirect root */}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
+            {/* Redirect root (Handled by LandingPage above) */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </React.Suspense>
+        </Suspense>
       </BrowserRouter>
     </Provider>
   );
